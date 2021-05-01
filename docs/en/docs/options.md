@@ -33,13 +33,13 @@ struct TemplateStruct {
 
 ## Configuration file
 
-Sailfish allows global and local configuration in a file named `sailfish.yml`. Sailfish looks for this file in same directory as `Cargo.toml` and all parent directories.
+Sailfish allows global and local configuration in a file named `sailfish.toml`. Sailfish looks for this file in same directory as `Cargo.toml` and all parent directories.
 If, for example, `Cargo.toml` exists in `/foo/bar/baz` directory, then the following configuration files would be scanned in this order.
 
-- `/foo/bar/baz/sailfish.yml`
-- `/foo/bar/sailfish.yml`
-- `/foo/sailfish.yml`
-- `/sailfish.yml`
+- `/foo/bar/baz/sailfish.toml`
+- `/foo/bar/sailfish.toml`
+- `/foo/sailfish.toml`
+- `/sailfish.toml`
 
 If a key is specified in multiple configuration files, the value in the deeper directory takes precedence over ancestor directories.
 
@@ -47,15 +47,21 @@ If a key is specified in both configuration file and derive options, then the va
 
 ### Configuration file format
 
-Configuration files are written in the YAML 1.2 format. Here is the default configuration.
+Configuration files are written in the TOML 0.5 format. Here is the default configuration:
 
-``` yaml
-template_dir: "templates"
-escape: true
-delimiter: "%"
+``` toml
+template_dirs = ["templates"]
+escape = true
+delimiter = "%"
 
-optimization:
-    rm_whitespace: false
+[optimizations]
+rm_whitespace = false
 ```
 
-You can specify another template directory in `template_dir` option. Other options are same as derive options.
+You can specify another template directory in `template_dirs` option. Other options are same as derive options.
+
+You can also embed environment variables in `template_dirs` paths by wrapping the variable name with `${` and `}` like `${MY_ENV_VAR}`:
+
+```toml
+template_dirs = ["${CI}/path/to/project/${MYVAR}/templates"]
+```
