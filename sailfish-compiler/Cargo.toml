@@ -34,7 +34,7 @@ default-features = false
 features = ["parsing", "full", "visit-mut", "printing"]
 
 [dependencies.proc-macro2]
-version = ">=1.0.11, <=1.0.26"
+version = ">=1.0.11, <=1.0.27"
 default-features = false
 features = ["span-locations"]
 
